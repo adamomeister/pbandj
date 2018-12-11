@@ -14,7 +14,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<router-link to="/dashboard/v2" class="navbar-brand"><span class="navbar-logo"></span> <b>Color</b> Admin</router-link>
+				<router-link to="/dashboard/v2" class="navbar-brand"><span class="navbar-logo"></span> <b>Capstone</b> App</router-link>
 				<button type="button" class="navbar-toggle" v-on:click="toggleMobileSidebar" v-if="!pageOptions.pageWithTwoSidebar && (!pageOptions.pageWithTopMenu && !pageOptions.pageWithoutSidebar)">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -128,7 +128,7 @@
 							<div class="image image-icon bg-black text-grey-darker">
 								<i class="fa fa-user"></i>
 							</div>
-							<span class="d-none d-md-inline">Adam Schwartz</span> <b class="caret"></b>
+							<span class="d-none d-md-inline">Current User</span> <b class="caret"></b>
 						</template>
 						<b-dropdown-item href="javascript:;">Edit Profile</b-dropdown-item>
 						<b-dropdown-item href="javascript:;"><span class="badge badge-danger pull-right">2</span> Inbox</b-dropdown-item>

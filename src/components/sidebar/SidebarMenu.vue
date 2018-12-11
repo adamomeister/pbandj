@@ -6,37 +6,37 @@ const sidebarMenu = [
       { path: '/dashboard/v2', title: 'Dashboard v2' }
     ]
   },
-  { path: '/email', icon: 'fa fa-hdd', title: 'Email', badge: '10',
-    children: [
-      { path: '/email/inbox', title: 'Inbox' },
-      { path: '/email/compose', title: 'Compose' },
-      { path: '/email/detail', title: 'Detail' }
-    ]
-  },
-  { path: '/widgets', icon: 'fab fa-simplybuilt', title: 'Widgets', label: 'NEW' },
-  { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
-    children: [
-      { path: '/ui/general', title: 'General', highlight: true },
-      { path: '/ui/typography', title: 'Typograhy' },
-      { path: '/ui/tabs-accordions', title: 'Tabs & Accordions' },
-      { path: '/ui/modal-notification', title: 'Modal & Notification' },
-      { path: '/ui/widget-boxes', title: 'Widget Boxes' },
-      { path: '/ui/media-object', title: 'Media Object' },
-      { path: '/ui/buttons', title: 'Buttons', highlight: true },
-      { path: '/ui/icons', title: 'Icons' },
-      { path: '/ui/simple-line-icons', title: 'Simple Line Icons' },
-      { path: '/ui/ionicons', title: 'Ionicons' },
-      { path: '/ui/language-bar-icon', title: 'Language Bar & Icon' },
-      { path: '/ui/social-buttons', title: 'Social Buttons' }
-    ]
-  },
-  { path: '/bootstrap-4', img: '/assets/img/logo/logo-bs4.png', title: 'Bootstrap 4', label: 'NEW' },
-  { path: '/form', icon: 'fa fa-list-ol', title: 'Form Stuff', label: 'NEW',
-    children: [
-      { path: '/form/elements', title: 'Form Elements', highlight: true },
-      { path: '/form/plugins', title: 'Form Plugins', highlight: true }
-    ]
-  },
+  // { path: '/email', icon: 'fa fa-hdd', title: 'Email', badge: '10',
+  //   children: [
+  //     { path: '/email/inbox', title: 'Inbox' },
+  //     { path: '/email/compose', title: 'Compose' },
+  //     { path: '/email/detail', title: 'Detail' }
+  //   ]
+  // },
+  // { path: '/widgets', icon: 'fab fa-simplybuilt', title: 'Widgets', label: 'NEW' },
+  // { path: '/ui', icon: 'fa fa-gem', title: 'UI Elements', label: 'NEW',
+  //   children: [
+  //     { path: '/ui/general', title: 'General', highlight: true },
+  //     { path: '/ui/typography', title: 'Typograhy' },
+  //     { path: '/ui/tabs-accordions', title: 'Tabs & Accordions' },
+  //     { path: '/ui/modal-notification', title: 'Modal & Notification' },
+  //     { path: '/ui/widget-boxes', title: 'Widget Boxes' },
+  //     { path: '/ui/media-object', title: 'Media Object' },
+  //     { path: '/ui/buttons', title: 'Buttons', highlight: true },
+  //     { path: '/ui/icons', title: 'Icons' },
+  //     { path: '/ui/simple-line-icons', title: 'Simple Line Icons' },
+  //     { path: '/ui/ionicons', title: 'Ionicons' },
+  //     { path: '/ui/language-bar-icon', title: 'Language Bar & Icon' },
+  //     { path: '/ui/social-buttons', title: 'Social Buttons' }
+  //   ]
+  // },
+  // { path: '/bootstrap-4', img: '/assets/img/logo/logo-bs4.png', title: 'Bootstrap 4', label: 'NEW' },
+  // { path: '/form', icon: 'fa fa-list-ol', title: 'Form Stuff', label: 'NEW',
+  //   children: [
+  //     { path: '/form/elements', title: 'Form Elements', highlight: true },
+  //     { path: '/form/plugins', title: 'Form Plugins', highlight: true }
+  //   ]
+  // },
   { path: '/table', icon: 'fa fa-table', title: 'Tables',
     children: [
       { path: '/table/basic', title: 'Basic Tables' },

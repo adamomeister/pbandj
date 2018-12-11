@@ -59,7 +59,7 @@
 				<div class="widget widget-stats bg-black-lighter">
 					<div class="stats-icon"><i class="fa fa-clock"></i></div>
 					<div class="stats-info">
-						<h4>AVG TIME ON SITE</h4>
+						<h4>{{ message }}</h4>
 						<p>00:12:23</p>	
 					</div>
 					<div class="stats-link">
@@ -81,7 +81,7 @@
 				<!-- end panel -->
 				
 				<!-- begin tabs -->
-				<b-tabs nav-wrapper-class="nav-tabs-inverse nav-justified nav-justified-mobile">
+				<!-- <b-tabs nav-wrapper-class="nav-tabs-inverse nav-justified nav-justified-mobile">
 					<b-tab active>
 						<template slot="title">
 							<i class="fa fa-camera fa-lg m-r-5"></i> <span class="d-none d-md-inline">Latest Post</span>
@@ -269,11 +269,11 @@
 							</ul>
 						</div>
 					</b-tab>
-				</b-tabs>
+				</b-tabs> -->
 				<!-- end tabs -->
 				
 				<!-- begin panel -->
-				<panel title="Quick Post" noBody="true" footerClass="text-right">
+<!-- 				<panel title="Quick Post" noBody="true" footerClass="text-right">
 					<template slot="outsideBody">
 						<div class="panel-toolbar">
 							<div class="btn-group m-r-5">
@@ -294,11 +294,11 @@
 						<a href="javascript:;" class="btn btn-white btn-sm">Cancel</a>
 						<a href="javascript:;" class="btn btn-primary btn-sm m-l-5">Action</a>
 					</template>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
 									
 				<!-- begin panel -->
-				<panel title="Message">
+				<!-- <panel title="Message">
 					<div class="height-sm overflow-scroll">
 						<ul class="media-list media-list-with-divider media-messaging">
 							<li class="media media-sm">
@@ -349,7 +349,7 @@
 							</div>
 						</form>
 					</template>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
 			</div>
 			<!-- end col-8 -->
@@ -434,7 +434,7 @@
 				<!-- end panel -->
 				
 				<!-- begin panel -->
-				<panel title="Todo List" bodyClass="p-0">
+				<!-- <panel title="Todo List" bodyClass="p-0">
 					<ul class="todolist">
 						<li class="active">
 							<a href="javascript:;" class="todolist-container active" data-click="todolist">
@@ -479,19 +479,19 @@
 							</a>
 						</li>
 					</ul>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
 				
 				<!-- begin panel -->
-				<panel title="World Visitors" bodyClass="p-0">
+				<!-- <panel title="World Visitors" bodyClass="p-0">
 					<GmapMap class="bg-black height-sm" v-bind:options="map" :zoom="3" :center="{lat: 25.304304, lng: -90.06591800000001}"></GmapMap>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
 				
 				<!-- begin panel -->
-				<panel title="Calendar" bodyClass="p-0">
+				<!-- <panel title="Calendar" bodyClass="p-0">
 					<vue-event-calendar :events="events.data"></vue-event-calendar>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
 			</div>
 			<!-- end col-4 -->
@@ -501,6 +501,7 @@
 </template>
 
 <script>
+var axios = require('axios');
 import LineChart from '../components/vue-chartjs/LineChart'
 import DoughnutChart from '../components/vue-chartjs/DoughnutChart'
 
@@ -510,7 +511,10 @@ export default {
 		DoughnutChart
 	},
 	created() {
-		console.log("did it work?")
+		axios.get('http://localhost:3000/api/profit_losses/show').then(function(response) {
+      this.message = response.data;
+      console.log(response.data);
+    }.bind(this));
 	},
 	data() {
 		// eslint-disable-next-line
@@ -534,11 +538,12 @@ export default {
 		}]
 		
 		return {
+			message: "",
 			lineChart: {
 				data: {
 					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 					datasets: [{
-						label: 'Page Views',
+						label: "A Label or Something",
 						backgroundColor: 'rgba(52, 143, 226, 0.2)',
 						borderColor: '#348fe2',
 						pointBackgroundColor: '#348fe2',
