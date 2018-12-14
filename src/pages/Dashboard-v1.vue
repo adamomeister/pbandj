@@ -45,7 +45,7 @@
 				<div class="widget widget-stats bg-grey-darker">
 					<div class="stats-icon"><i class="fa fa-users"></i></div>
 					<div class="stats-info">
-						<h4>UNIQUE VISITORS</h4>
+						<h4> From my web request, lineChart.data.datasets[0].data {{ lineChart.data.datasets[0].data }}</h4>
 						<p>1,291,922</p>	
 					</div>
 					<div class="stats-link">
@@ -59,7 +59,7 @@
 				<div class="widget widget-stats bg-black-lighter">
 					<div class="stats-icon"><i class="fa fa-clock"></i></div>
 					<div class="stats-info">
-						<h4>{{ message }}</h4>
+						<h4> Hello there </h4>
 						<p>00:12:23</p>	
 					</div>
 					<div class="stats-link">
@@ -501,19 +501,31 @@
 </template>
 
 <script>
+import { Line } from 'vue-chartjs'
 var axios = require('axios');
 import LineChart from '../components/vue-chartjs/LineChart'
 import DoughnutChart from '../components/vue-chartjs/DoughnutChart'
 
 export default {
+  // extends: Line,
+  props: ['data', 'options'],
+  // mounted () {
+  //   this.renderChart(this.data, this.options)
+  // },
 	components: {
 		LineChart,
 		DoughnutChart
 	},
 	created() {
-		axios.get('http://localhost:3000/api/profit_losses/show').then(function(response) {
-      this.message = response.data;
-      console.log(response.data);
+		axios.get('http://localhost:3000/api/profit_losses/search_term?year=2018&category=income&type=revenue').then(function(response) {
+      this.profit_loss_data_all = response.data;
+      console.log(this.profit_loss_data_all.data);
+      this.lineChart.data.datasets[0].data = this.profit_loss_data_all.data;
+      console.log(this);
+      console.log(Line);
+      console.log("hello");
+      console.log(LineChart);
+      // Line.renderChart(this.data, this.options);
     }.bind(this));
 	},
 	data() {
@@ -538,7 +550,7 @@ export default {
 		}]
 		
 		return {
-			message: "",
+			profit_loss_data_all: [],
 			lineChart: {
 				data: {
 					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -549,7 +561,7 @@ export default {
 						pointBackgroundColor: '#348fe2',
 						pointRadius: 2,
 						borderWidth: 2,
-						data: [245, 60, 48, 55, 49, 58, 50, 45, 52, 39, 43, 67]
+						data: [100, 20, 30, 100, 50, 60, 70, 80, 90, 98, 99, 100]
 					}, {
 						label: 'Visitors',
 						backgroundColor: 'rgba(45, 53, 60, 0.2)',
@@ -595,9 +607,9 @@ export default {
 					cutoutPercentage: 70
 				}
 			},
-			map: {
-				styles: [{featureType:"all",elementType:"labels.text.fill",stylers:[{saturation:36},{lightness:40}]},{featureType:"all",elementType:"labels.text.stroke",stylers:[{visibility:"on"},{color:"#000000"},{lightness:16}]},{featureType:"all",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"geometry.fill",stylers:[{color:"#2d353c"},{lightness:20}]},{featureType:"administrative",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:17},{weight:1.2}]},{featureType:"administrative",elementType:"labels.text.fill",stylers:[{color:"#d8d8d8"}]},{featureType:"administrative.neighborhood",elementType:"geometry.fill",stylers:[{color:"#ff0000"}]},{featureType:"administrative.land_parcel",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#000000"},{lightness:20}]},{featureType:"landscape",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"labels.text.fill",stylers:[{color:"#00acac"}]},{featureType:"landscape.man_made",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#000000"},{lightness:21}]},{featureType:"poi",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"labels.text.fill",stylers:[{color:"#575d63"}]},{featureType:"road",elementType:"labels.text.fill",stylers:[{color:"#348fe2"}]},{featureType:"road.highway",elementType:"geometry.fill",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"road.highway",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:29},{weight:.2}]},{featureType:"road.highway.controlled_access",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#000000"},{lightness:18}]},{featureType:"road.arterial",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.local",elementType:"geometry",stylers:[{color:"#000000"},{lightness:16}]},{featureType:"road.local",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"transit",elementType:"geometry",stylers:[{color:"#000000"},{lightness:19}]},{featureType:"transit",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"water",elementType:"geometry.fill",stylers:[{color:"#1a1f23"}]}]
-			},
+			// map: {
+			// 	styles: [{featureType:"all",elementType:"labels.text.fill",stylers:[{saturation:36},{lightness:40}]},{featureType:"all",elementType:"labels.text.stroke",stylers:[{visibility:"on"},{color:"#000000"},{lightness:16}]},{featureType:"all",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"geometry.fill",stylers:[{color:"#2d353c"},{lightness:20}]},{featureType:"administrative",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:17},{weight:1.2}]},{featureType:"administrative",elementType:"labels.text.fill",stylers:[{color:"#d8d8d8"}]},{featureType:"administrative.neighborhood",elementType:"geometry.fill",stylers:[{color:"#ff0000"}]},{featureType:"administrative.land_parcel",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#000000"},{lightness:20}]},{featureType:"landscape",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"labels.text.fill",stylers:[{color:"#00acac"}]},{featureType:"landscape.man_made",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#000000"},{lightness:21}]},{featureType:"poi",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"labels.text.fill",stylers:[{color:"#575d63"}]},{featureType:"road",elementType:"labels.text.fill",stylers:[{color:"#348fe2"}]},{featureType:"road.highway",elementType:"geometry.fill",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"road.highway",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:29},{weight:.2}]},{featureType:"road.highway.controlled_access",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#000000"},{lightness:18}]},{featureType:"road.arterial",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.local",elementType:"geometry",stylers:[{color:"#000000"},{lightness:16}]},{featureType:"road.local",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"transit",elementType:"geometry",stylers:[{color:"#000000"},{lightness:19}]},{featureType:"transit",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"water",elementType:"geometry.fill",stylers:[{color:"#1a1f23"}]}]
+			// },
 			events: {
 				data: eventsData,
 				displayData: eventsData
