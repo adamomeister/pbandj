@@ -75,7 +75,7 @@
 			<!-- begin col-8 -->
 			<div class="col-lg-8">
 				<!-- begin panel -->
-				<panel title="Chris Adamo (Last 7 Days)">
+				<panel title="2018 Earnings">
 					<line-chart :data="lineChart.data" :options="lineChart.options" class="height-sm"></line-chart>
 				</panel>
 				<!-- end panel -->
@@ -501,31 +501,24 @@
 </template>
 
 <script>
-import { Line } from 'vue-chartjs'
 var axios = require('axios');
 import LineChart from '../components/vue-chartjs/LineChart'
 import DoughnutChart from '../components/vue-chartjs/DoughnutChart'
 
 export default {
-  // extends: Line,
   props: ['data', 'options'],
-  // mounted () {
-  //   this.renderChart(this.data, this.options)
-  // },
 	components: {
 		LineChart,
 		DoughnutChart
 	},
 	created() {
-		axios.get('http://localhost:3000/api/profit_losses/search_term?year=2018&category=income&type=revenue').then(function(response) {
+		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2018').then(function(response) {
       this.profit_loss_data_all = response.data;
-      console.log(this.profit_loss_data_all.data);
-      this.lineChart.data.datasets[0].data = this.profit_loss_data_all.data;
-      console.log(this);
-      console.log(Line);
-      console.log("hello");
-      console.log(LineChart);
-      // Line.renderChart(this.data, this.options);
+      console.log(response.data);
+      this.lineChart.data.datasets[0].data = this.profit_loss_data_all.revenue_monthly_totals;
+      this.lineChart.data.datasets[1].data = this.profit_loss_data_all.direct_costs_monthly_totals;
+      this.lineChart.data.datasets[2].data = this.profit_loss_data_all.fixed_costs_monthly_totals;
+      
     }.bind(this));
 	},
 	data() {
@@ -536,18 +529,18 @@ export default {
 		// eslint-disable-next-line
 		Chart.defaults.global.defaultFontStyle = '600';
 		
-		let today = new Date()
-		var eventsData = [{
-			date: `${today.getFullYear()}/${today.getMonth() + 1}/15`,
-			title: 'Sales Reporting',
-			badge: 'bg-gradient-teal',
-			time: '9:00am'
-		},{
-			date: `${today.getFullYear()}/${today.getMonth() + 1}/24`,
-			title: 'Have a meeting with sales team',
-			badge: 'bg-gradient-blue',
-			time: '2:45pm'
-		}]
+		// let today = new Date()
+		// var eventsData = [{
+		// 	date: `${today.getFullYear()}/${today.getMonth() + 1}/15`,
+		// 	title: 'Sales Reporting',
+		// 	badge: 'bg-gradient-teal',
+		// 	time: '9:00am'
+		// },{
+		// 	date: `${today.getFullYear()}/${today.getMonth() + 1}/24`,
+		// 	title: 'Have a meeting with sales team',
+		// 	badge: 'bg-gradient-blue',
+		// 	time: '2:45pm'
+		// }]
 		
 		return {
 			profit_loss_data_all: [],
@@ -555,21 +548,29 @@ export default {
 				data: {
 					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 					datasets: [{
-						label: "A Label or Something",
+						label: "Revenue",
 						backgroundColor: 'rgba(52, 143, 226, 0.2)',
 						borderColor: '#348fe2',
 						pointBackgroundColor: '#348fe2',
 						pointRadius: 2,
 						borderWidth: 2,
-						data: [100, 20, 30, 100, 50, 60, 70, 80, 90, 98, 99, 100]
+						data: []
 					}, {
-						label: 'Visitors',
+						label: 'Direct Costs',
 						backgroundColor: 'rgba(45, 53, 60, 0.2)',
 						borderColor: '#2d353c',
 						pointBackgroundColor: '#2d353c',
 						pointRadius: 2,
 						borderWidth: 2,
-						data: [22, 18, 20, 18, 20, 23, 20, 18, 22, 18, 20, 23]
+						data: []
+					}, {
+						label: 'Fixed Costs',
+						backgroundColor: 'rgba(72, 201, 176, 0.2)',
+						borderColor: '#48C9B0',
+						pointBackgroundColor: '#48C9B0',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
 					}]
 				},
 				options: {
@@ -585,9 +586,13 @@ export default {
 					},
 					scales: {
 						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: '$'
+							},
 							ticks: {
-								beginAtZero:true,
-								max: 100
+								suggestedMin: 0,
+								suggestedMax: 200,
 							}
 						}]
 					}
@@ -610,10 +615,10 @@ export default {
 			// map: {
 			// 	styles: [{featureType:"all",elementType:"labels.text.fill",stylers:[{saturation:36},{lightness:40}]},{featureType:"all",elementType:"labels.text.stroke",stylers:[{visibility:"on"},{color:"#000000"},{lightness:16}]},{featureType:"all",elementType:"labels.icon",stylers:[{visibility:"off"}]},{featureType:"administrative",elementType:"geometry.fill",stylers:[{color:"#2d353c"},{lightness:20}]},{featureType:"administrative",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:17},{weight:1.2}]},{featureType:"administrative",elementType:"labels.text.fill",stylers:[{color:"#d8d8d8"}]},{featureType:"administrative.neighborhood",elementType:"geometry.fill",stylers:[{color:"#ff0000"}]},{featureType:"administrative.land_parcel",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"geometry",stylers:[{color:"#000000"},{lightness:20}]},{featureType:"landscape",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"landscape",elementType:"labels.text.fill",stylers:[{color:"#00acac"}]},{featureType:"landscape.man_made",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"geometry",stylers:[{color:"#000000"},{lightness:21}]},{featureType:"poi",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"poi",elementType:"labels.text.fill",stylers:[{color:"#575d63"}]},{featureType:"road",elementType:"labels.text.fill",stylers:[{color:"#348fe2"}]},{featureType:"road.highway",elementType:"geometry.fill",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"road.highway",elementType:"geometry.stroke",stylers:[{color:"#000000"},{lightness:29},{weight:.2}]},{featureType:"road.highway.controlled_access",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.arterial",elementType:"geometry",stylers:[{color:"#000000"},{lightness:18}]},{featureType:"road.arterial",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"road.local",elementType:"geometry",stylers:[{color:"#000000"},{lightness:16}]},{featureType:"road.local",elementType:"geometry.fill",stylers:[{color:"#575d63"}]},{featureType:"transit",elementType:"geometry",stylers:[{color:"#000000"},{lightness:19}]},{featureType:"transit",elementType:"geometry.fill",stylers:[{color:"#2d353c"}]},{featureType:"water",elementType:"geometry",stylers:[{color:"#000000"},{lightness:17}]},{featureType:"water",elementType:"geometry.fill",stylers:[{color:"#1a1f23"}]}]
 			// },
-			events: {
-				data: eventsData,
-				displayData: eventsData
-			},
+			// events: {
+			// 	data: eventsData,
+			// 	displayData: eventsData
+			// },
 			sparkline1: {
 				data: [ 50,30,45,40,50,20,35,40,50,70,90,40 ],
 				length: 12,
