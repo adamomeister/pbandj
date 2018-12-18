@@ -14,7 +14,7 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<router-link to="/dashboard/v2" class="navbar-brand"><span class="navbar-logo"></span> <b>Capstone</b> App</router-link>
+				<router-link to="/dashboard/v1" class="navbar-brand"><span class="navbar-logo"></span> <b>Capstone</b> App</router-link>
 				<button type="button" class="navbar-toggle" v-on:click="toggleMobileSidebar" v-if="!pageOptions.pageWithTwoSidebar && (!pageOptions.pageWithTopMenu && !pageOptions.pageWithoutSidebar)">
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
@@ -38,15 +38,15 @@
 		
 			<!-- begin header-nav -->
 			<ul class="navbar-nav navbar-right">
-				<li v-if="!pageOptions.pageWithLanguageBar" v-bind:class="{ 'hidden-sm': pageOptions.pageWithMegaMenu }">
+				<!-- <li v-if="!pageOptions.pageWithLanguageBar" v-bind:class="{ 'hidden-sm': pageOptions.pageWithMegaMenu }">
 					<form class="navbar-form" v-on:submit="checkForm">
 						<div class="form-group">
 							<input type="text" class="form-control" placeholder="Enter keyword" />
 							<button type="submit" class="btn btn-search"><i class="fa fa-search"></i></button>
 						</div>
 					</form>
-				</li>
-				<li class="dropdown">
+				</li> -->
+				<!-- <li class="dropdown">
 					<b-dropdown variant="link" menu-class="media-list dropdown-menu-right" toggle-class="f-s-14">
 						<template slot="button-content">
 							<i class="fa fa-bell"></i>
@@ -107,7 +107,7 @@
 							<a href="javascript:;">View more</a>
 						</b-dropdown-item>
 					</b-dropdown>
-				</li>
+				</li> -->
 				<li class="dropdown navbar-language" v-if="pageOptions.pageWithLanguageBar">
 					<b-dropdown variant="link" menu-class="p-b-0">
 						<template slot="button-content">

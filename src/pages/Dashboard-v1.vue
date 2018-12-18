@@ -3,17 +3,17 @@
 		<!-- begin breadcrumb -->
 		<ol class="breadcrumb pull-right">
 			<li class="breadcrumb-item"><a href="javascript:;">Home</a></li>
-			<li class="breadcrumb-item active">Dashboard</li>
+			<li class="breadcrumb-item active">Earnings Dashboard</li>
 		</ol>
 		<!-- end breadcrumb -->
 		<!-- begin page-header -->
-		<h1 class="page-header">Dashboard <small>header small text goes here...</small></h1>
+		<h1 class="page-header">Earnings <small>income and expenses at a glance</small></h1>
 		<!-- end page-header -->
 		
 		<!-- begin row -->
 		<div class="row">
 			<!-- begin col-3 -->
-			<div class="col-lg-3 col-md-6">
+			<!-- <div class="col-lg-3 col-md-6">
 				<div class="widget widget-stats bg-red">
 					<div class="stats-icon"><i class="fa fa-desktop"></i></div>
 					<div class="stats-info">
@@ -24,10 +24,10 @@
 						<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- end col-3 -->
 			<!-- begin col-3 -->
-			<div class="col-lg-3 col-md-6">
+			<!-- <div class="col-lg-3 col-md-6">
 				<div class="widget widget-stats bg-orange">
 					<div class="stats-icon"><i class="fa fa-link"></i></div>
 					<div class="stats-info">
@@ -38,10 +38,10 @@
 						<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- end col-3 -->
 			<!-- begin col-3 -->
-			<div class="col-lg-3 col-md-6">
+<!-- 			<div class="col-lg-3 col-md-6">
 				<div class="widget widget-stats bg-grey-darker">
 					<div class="stats-icon"><i class="fa fa-users"></i></div>
 					<div class="stats-info">
@@ -52,10 +52,10 @@
 						<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- end col-3 -->
 			<!-- begin col-3 -->
-			<div class="col-lg-3 col-md-6">
+			<!-- <div class="col-lg-3 col-md-6">
 				<div class="widget widget-stats bg-black-lighter">
 					<div class="stats-icon"><i class="fa fa-clock"></i></div>
 					<div class="stats-info">
@@ -66,7 +66,7 @@
 						<a href="javascript:;">View Detail <i class="fa fa-arrow-alt-circle-right"></i></a>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<!-- end col-3 -->
 		</div>
 		<!-- end row -->
@@ -75,11 +75,29 @@
 			<!-- begin col-8 -->
 			<div class="col-lg-8">
 				<!-- begin panel -->
-				<panel title="2018 Earnings">
-					<line-chart :data="lineChart.data" :options="lineChart.options" class="height-sm"></line-chart>
+				<panel title="Revnue by Year">
+					<line-chart :data="lineChart1.data" :options="lineChart1.options" class="height-sm"></line-chart>
 				</panel>
 				<!-- end panel -->
-				
+				<!-- begin panel -->
+				<panel title="Direct Costs by Year">
+					<line-chart :data="lineChart2.data" :options="lineChart2.options" class="height-sm"></line-chart>
+				</panel>
+				<!-- end panel -->
+				<!-- begin panel -->
+				<panel title="Fixed Costs by Year">
+					<line-chart :data="lineChart3.data" :options="lineChart3.options" class="height-sm"></line-chart>
+				</panel>
+				<!-- end panel -->
+				<panel noButton="true">
+					<template slot="header">
+						<h4 class="panel-title">Upload Earnings Data Files</h4>
+					</template>
+					<div class="large-12 medium-12 small-12 cell">
+							<input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+							<button v-on:click="submitFile()">Submit</button>
+					</div>
+				</panel>
 				<!-- begin tabs -->
 				<!-- <b-tabs nav-wrapper-class="nav-tabs-inverse nav-justified nav-justified-mobile">
 					<b-tab active>
@@ -513,14 +531,49 @@ export default {
 	},
 	created() {
 		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2018').then(function(response) {
-      this.profit_loss_data_all = response.data;
+      this.profit_loss_data_2018 = response.data;
       console.log(response.data);
-      this.lineChart.data.datasets[0].data = this.profit_loss_data_all.revenue_monthly_totals;
-      this.lineChart.data.datasets[1].data = this.profit_loss_data_all.direct_costs_monthly_totals;
-      this.lineChart.data.datasets[2].data = this.profit_loss_data_all.fixed_costs_monthly_totals;
-      
+      this.lineChart1.data.datasets[0].data = this.profit_loss_data_2018.revenue_monthly_totals;
+      this.lineChart2.data.datasets[0].data = this.profit_loss_data_2018.direct_costs_monthly_totals;
+      this.lineChart3.data.datasets[0].data = this.profit_loss_data_2018.fixed_costs_monthly_totals;
     }.bind(this));
+		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2017').then(function(response) {
+				this.profit_loss_data_2017 = response.data;
+	      console.log(response.data);
+				this.lineChart1.data.datasets[1].data = this.profit_loss_data_2017.revenue_monthly_totals;
+				this.lineChart2.data.datasets[1].data = this.profit_loss_data_2017.direct_costs_monthly_totals;
+				this.lineChart3.data.datasets[1].data = this.profit_loss_data_2017.fixed_costs_monthly_totals;
+		}.bind(this));
+		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2016').then(function(response) {
+				this.profit_loss_data_2016 = response.data;
+	      console.log(response.data);
+				this.lineChart1.data.datasets[2].data = this.profit_loss_data_2016.revenue_monthly_totals;
+				this.lineChart2.data.datasets[2].data = this.profit_loss_data_2016.direct_costs_monthly_totals;
+				this.lineChart3.data.datasets[2].data = this.profit_loss_data_2016.fixed_costs_monthly_totals;
+		}.bind(this));
 	},
+	methods: {
+    submitFile(){
+    	let formData = new FormData();
+    	formData.append('file', this.file);
+    	axios.post( 'http://localhost:3000/api/profit_losses/file_upload',
+                formData,
+                {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+              }
+            ).then(function(){
+          console.log('SUCCESS!!');
+        })
+        .catch(function(){
+          console.log('FAILURE!!');
+        });
+    },
+    handleFileUpload(){
+			this.file = this.$refs.file.files[0];
+    }
+  },
 	data() {
 		// eslint-disable-next-line
 		Chart.defaults.global.defaultFontColor = '#2d353c';
@@ -543,12 +596,15 @@ export default {
 		// }]
 		
 		return {
-			profit_loss_data_all: [],
-			lineChart: {
+			file: '',
+			profit_loss_data_2018: [],
+			profit_loss_data_2017: [],
+			profit_loss_data_2016: [],
+			lineChart1: {
 				data: {
 					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
 					datasets: [{
-						label: "Revenue",
+						label: "2018",
 						backgroundColor: 'rgba(52, 143, 226, 0.2)',
 						borderColor: '#348fe2',
 						pointBackgroundColor: '#348fe2',
@@ -556,7 +612,7 @@ export default {
 						borderWidth: 2,
 						data: []
 					}, {
-						label: 'Direct Costs',
+						label: '2017',
 						backgroundColor: 'rgba(45, 53, 60, 0.2)',
 						borderColor: '#2d353c',
 						pointBackgroundColor: '#2d353c',
@@ -564,7 +620,115 @@ export default {
 						borderWidth: 2,
 						data: []
 					}, {
-						label: 'Fixed Costs',
+						label: '2016',
+						backgroundColor: 'rgba(72, 201, 176, 0.2)',
+						borderColor: '#48C9B0',
+						pointBackgroundColor: '#48C9B0',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}]
+				},
+				options: {
+					responsive: true, 
+					maintainAspectRatio: false,
+					hover: {
+						mode: 'nearest',
+						intersect: true
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: '$'
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 200,
+							}
+						}]
+					}
+				}
+			},
+			lineChart2: {
+				data: {
+					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+					datasets: [{
+						label: "2018",
+						backgroundColor: 'rgba(52, 143, 226, 0.2)',
+						borderColor: '#348fe2',
+						pointBackgroundColor: '#348fe2',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}, {
+						label: '2017',
+						backgroundColor: 'rgba(45, 53, 60, 0.2)',
+						borderColor: '#2d353c',
+						pointBackgroundColor: '#2d353c',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}, {
+						label: '2016',
+						backgroundColor: 'rgba(72, 201, 176, 0.2)',
+						borderColor: '#48C9B0',
+						pointBackgroundColor: '#48C9B0',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}]
+				},
+				options: {
+					responsive: true, 
+					maintainAspectRatio: false,
+					hover: {
+						mode: 'nearest',
+						intersect: true
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: '$'
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 200,
+							}
+						}]
+					}
+				}
+			},
+			lineChart3: {
+				data: {
+					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
+					datasets: [{
+						label: "2018",
+						backgroundColor: 'rgba(52, 143, 226, 0.2)',
+						borderColor: '#348fe2',
+						pointBackgroundColor: '#348fe2',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}, {
+						label: '2017',
+						backgroundColor: 'rgba(45, 53, 60, 0.2)',
+						borderColor: '#2d353c',
+						pointBackgroundColor: '#2d353c',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}, {
+						label: '2016',
 						backgroundColor: 'rgba(72, 201, 176, 0.2)',
 						borderColor: '#48C9B0',
 						pointBackgroundColor: '#48C9B0',

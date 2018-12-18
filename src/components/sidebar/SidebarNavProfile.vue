@@ -8,8 +8,8 @@
 				</div>
 				<div class="info">
 					<b class="caret pull-right"></b>
-					Sean Ngu
-					<small>Front end developer</small>
+					Your Business Name
+					<small>Settings</small>
 				</div>
 			</a>
 		</li>

@@ -1,5 +1,5 @@
 import { Line } from 'vue-chartjs'
-var axios = require('axios');
+// var axios = require('axios');
 
 export default {
   extends: Line,
@@ -15,7 +15,7 @@ export default {
   mounted () {
     setTimeout(function() {
       this.renderChart(this.data, this.options)
-    }.bind(this), 1000);
+    }.bind(this), 2000);
   },
   // updated () {
   //   console.log('in the updated attribute');
