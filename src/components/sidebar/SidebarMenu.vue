@@ -31,12 +31,12 @@ const sidebarMenu = [
   //   ]
   // },
   // { path: '/bootstrap-4', img: '/assets/img/logo/logo-bs4.png', title: 'Bootstrap 4', label: 'NEW' },
-  { path: '/form', icon: 'fa fa-list-ol', title: 'Form Stuff', label: 'NEW',
-    children: [
-      { path: '/form/elements', title: 'Form Elements', highlight: true },
-      { path: '/form/plugins', title: 'Form Plugins', highlight: true }
-    ]
-  },
+  // { path: '/form', icon: 'fa fa-list-ol', title: 'Form Stuff', label: 'NEW',
+  //   children: [
+  //     { path: '/form/elements', title: 'Form Elements', highlight: true },
+  //     { path: '/form/plugins', title: 'Form Plugins', highlight: true }
+  //   ]
+  // },
   // { path: '/table', icon: 'fa fa-table', title: 'Tables',
   //   children: [
   //     { path: '/table/basic', title: 'Basic Tables' },

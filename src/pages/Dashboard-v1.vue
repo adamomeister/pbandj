@@ -75,6 +75,10 @@
 			<!-- begin col-8 -->
 			<div class="col-lg-8">
 				<!-- begin panel -->
+				<panel title="Annual Profit">
+					<line-chart :data="lineChart4.data" :options="lineChart4.options" class="height-sm"></line-chart>
+				</panel>
+				<!-- begin panel -->
 				<panel title="Revnue by Year">
 					<line-chart :data="lineChart1.data" :options="lineChart1.options" class="height-sm"></line-chart>
 				</panel>
@@ -89,15 +93,6 @@
 					<line-chart :data="lineChart3.data" :options="lineChart3.options" class="height-sm"></line-chart>
 				</panel>
 				<!-- end panel -->
-				<panel noButton="true">
-					<template slot="header">
-						<h4 class="panel-title">Upload Earnings Data Files</h4>
-					</template>
-					<div class="large-12 medium-12 small-12 cell">
-							<input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
-							<button v-on:click="submitFile()">Submit</button>
-					</div>
-				</panel>
 				<!-- begin tabs -->
 				<!-- <b-tabs nav-wrapper-class="nav-tabs-inverse nav-justified nav-justified-mobile">
 					<b-tab active>
@@ -222,6 +217,7 @@
 										</td>
 										<td class="text-nowrap">
 											<h6><a href="javascript:;">Nunc eleifend lorem eu velit eleifend, <br />eget faucibus nibh placerat.</a></h6>
+
 										</td>
 										<td>$500.00</td>
 										<td class="text-nowrap"><a href="javascript:;">Derick Wong</a></td>
@@ -374,7 +370,7 @@
 			<!-- begin col-4 -->
 			<div class="col-lg-4">
 				<!-- begin panel -->
-				<panel title="Analytics Details" bodyClass="p-t-0">
+				<!-- <panel title="Analytics Details" bodyClass="p-t-0">
 					<div class="table-responsive">
 						<table class="table table-valign-middle">
 							<thead>
@@ -386,16 +382,16 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><label class="label label-danger">Unique Visitor</label></td>
-									<td>13,203 <span class="text-success"><i class="fa fa-arrow-up"></i></span></td>
+									<td><label class="label label-primary">Revenue</label></td>
+									<td>Write something here</td>
 									<td>
 										<sparkline height="23">
-											<sparklineLine :data="sparkline1.data" :limit="sparkline1.length" :styles="sparkline1.lineStyle" />
+											<sparklineLine :data="revenue_trend_data" :limit="24" :styles="sparkline1.lineStyle" />
 										</sparkline>
 									</td>
 								</tr>
 								<tr>
-									<td><label class="label label-warning">Bounce Rate</label></td>
+									<td><label class="label label-warning">Fixed Costs</label></td>
 									<td>28.2%</td>
 									<td>
 										<sparkline height="23">
@@ -404,7 +400,7 @@
 									</td>
 								</tr>
 								<tr>
-									<td><label class="label label-success">Total Page Views</label></td>
+									<td><label class="label label-success">Direct Costs</label></td>
 									<td>1,230,030</td>
 									<td>
 										<sparkline height="23">
@@ -442,13 +438,23 @@
 							</tbody>
 						</table>
 					</div>
-				</panel>
+				</panel> -->
 				<!-- end panel -->
-				
-				<!-- begin panel -->
-				<panel title="Visitors User Agent">
-					<doughnut-chart :data="doughnutChart.data" :options="doughnutChart.options" class="height-sm"></doughnut-chart>
+				<!-- begin file upload panel -->
+				<panel noButton="true">
+					<template slot="header">
+						<h4 class="panel-title">Upload Earnings Data Files</h4>
+					</template>
+					<div class="large-12 medium-12 small-12 cell">
+							<input type="file" id="file" ref="file" v-on:change="handleFileUpload()"/>
+							<button v-on:click="submitFile()">Submit</button>
+					</div>
 				</panel>
+				<!-- end file upload panel -->
+				<!-- begin panel -->
+				<!-- <panel title="Visitors User Agent">
+					<doughnut-chart :data="doughnutChart.data" :options="doughnutChart.options" class="height-sm"></doughnut-chart>
+				</panel> -->
 				<!-- end panel -->
 				
 				<!-- begin panel -->
@@ -530,27 +536,44 @@ export default {
 		DoughnutChart
 	},
 	created() {
-		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2018').then(function(response) {
-      this.profit_loss_data_2018 = response.data;
-      console.log(response.data);
-      this.lineChart1.data.datasets[0].data = this.profit_loss_data_2018.revenue_monthly_totals;
-      this.lineChart2.data.datasets[0].data = this.profit_loss_data_2018.direct_costs_monthly_totals;
-      this.lineChart3.data.datasets[0].data = this.profit_loss_data_2018.fixed_costs_monthly_totals;
-    }.bind(this));
-		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2017').then(function(response) {
-				this.profit_loss_data_2017 = response.data;
-	      console.log(response.data);
-				this.lineChart1.data.datasets[1].data = this.profit_loss_data_2017.revenue_monthly_totals;
-				this.lineChart2.data.datasets[1].data = this.profit_loss_data_2017.direct_costs_monthly_totals;
-				this.lineChart3.data.datasets[1].data = this.profit_loss_data_2017.fixed_costs_monthly_totals;
-		}.bind(this));
 		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2016').then(function(response) {
 				this.profit_loss_data_2016 = response.data;
-	      console.log(response.data);
 				this.lineChart1.data.datasets[2].data = this.profit_loss_data_2016.revenue_monthly_totals;
 				this.lineChart2.data.datasets[2].data = this.profit_loss_data_2016.direct_costs_monthly_totals;
 				this.lineChart3.data.datasets[2].data = this.profit_loss_data_2016.fixed_costs_monthly_totals;
+				// this.revenue_trend_data.push.apply(this.revenue_trend_data, this.profit_loss_data_2016.revenue_monthly_totals);
+				// console.log(this.revenue_trend_data);
 		}.bind(this));
+		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2017').then(function(response) {
+				this.profit_loss_data_2017 = response.data;
+				this.lineChart1.data.datasets[1].data = this.profit_loss_data_2017.revenue_monthly_totals;
+				this.lineChart2.data.datasets[1].data = this.profit_loss_data_2017.direct_costs_monthly_totals;
+				this.lineChart3.data.datasets[1].data = this.profit_loss_data_2017.fixed_costs_monthly_totals;
+				// this.revenue_trend_data.push.apply(this.revenue_trend_data, this.profit_loss_data_2017.revenue_monthly_totals);
+				// console.log(this.revenue_trend_data);
+		}.bind(this));
+		axios.get('http://localhost:3000/api/profit_losses/profit_loss_query?year=2018').then(function(response) {
+      this.profit_loss_data_2018 = response.data;
+      this.lineChart1.data.datasets[0].data = this.profit_loss_data_2018.revenue_monthly_totals;
+      this.lineChart2.data.datasets[0].data = this.profit_loss_data_2018.direct_costs_monthly_totals;
+      this.lineChart3.data.datasets[0].data = this.profit_loss_data_2018.fixed_costs_monthly_totals;
+			this.revenue_trend_data = [].concat(
+				this.profit_loss_data_2016.revenue_monthly_totals,
+				this.profit_loss_data_2017.revenue_monthly_totals,
+				this.profit_loss_data_2018.revenue_monthly_totals);
+			this.gross_profit_percent = [].concat(
+				this.profit_loss_data_2016.yearly_gross_profit_percent,
+				this.profit_loss_data_2017.yearly_gross_profit_percent,
+				this.profit_loss_data_2018.yearly_gross_profit_percent);
+			this.lineChart4.data.datasets[0].data = this.gross_profit_percent;
+			this.net_profit_percent = [].concat(
+				this.profit_loss_data_2016.yearly_net_income_percent,
+				this.profit_loss_data_2017.yearly_net_income_percent,
+				this.profit_loss_data_2018.yearly_net_income_percent);
+			this.lineChart4.data.datasets[1].data = this.net_profit_percent;
+		console.log(this.revenue_trend_data);
+		console.log(this.gross_profit_percent);
+    }.bind(this));
 	},
 	methods: {
     submitFile(){
@@ -600,6 +623,55 @@ export default {
 			profit_loss_data_2018: [],
 			profit_loss_data_2017: [],
 			profit_loss_data_2016: [],
+			revenue_trend_data: [],
+			gross_profit_percent: [],
+			net_profit_percent: [],
+			lineChart4: {
+				data: {
+					labels: ['2016', '2017', '2018'],
+					datasets: [{
+						label: "Gross Profit",
+						backgroundColor: 'rgba(52, 143, 226, 0.2)',
+						borderColor: '#348fe2',
+						pointBackgroundColor: '#348fe2',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}, {
+						label: 'Net Profit',
+						backgroundColor: 'rgba(45, 53, 60, 0.2)',
+						borderColor: '#2d353c',
+						pointBackgroundColor: '#2d353c',
+						pointRadius: 2,
+						borderWidth: 2,
+						data: []
+					}]
+				},
+				options: {
+					responsive: true, 
+					maintainAspectRatio: false,
+					hover: {
+						mode: 'nearest',
+						intersect: true
+					},
+					tooltips: {
+						mode: 'index',
+						intersect: false,
+					},
+					scales: {
+						yAxes: [{
+							scaleLabel: {
+								display: true,
+								labelString: 'Percentage (%)'
+							},
+							ticks: {
+								suggestedMin: 0,
+								suggestedMax: 50,
+							}
+						}]
+					}
+				}
+			},			
 			lineChart1: {
 				data: {
 					labels: ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'],
@@ -784,15 +856,15 @@ export default {
 			// 	displayData: eventsData
 			// },
 			sparkline1: {
-				data: [ 50,30,45,40,50,20,35,40,50,70,90,40 ],
-				length: 12,
+				data: [  ],
+				length: 33,
 				lineStyle: {
 					stroke: '#ff5b57',
 					strokeWidth: 2
         }
       },
 			sparkline2: {
-				data: [ 50,30,45,40,50,20,35,40,50,70,90,40 ],
+				data: [  ],
 				length: 12,
 				lineStyle: {
 					stroke: '#f59c1a',
@@ -800,7 +872,7 @@ export default {
         }
       },
 			sparkline3: {
-				data: [ 50,30,45,40,50,20,35,40,50,70,90,40 ],
+				data: [  ],
 				length: 12,
 				lineStyle: {
 					stroke: '#00ACAC',
